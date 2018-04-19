@@ -1,7 +1,7 @@
 pragma solidity ^0.4.0;
 
 import "./BetBase.sol";
-import "../token/ERC20/BasicToken.sol";
+import "../token/ERC20/StandardToken.sol";
 
 contract Bet is BetBase {
     /// @dev 
