@@ -62,8 +62,13 @@ contract Bet is BetBase {
         _closeGambling(_gambling);
     }
 
+    function withdrawERC20() public onlyCEO {
+        // todo: 这里应该检测erc20Contract是否为0
+        erc20Contract.transfer(ceoAddress, erc20Contract.balanceOf(this));
+    }
+
     // 返回能否下注
-    function canChipIn(uint256 _betId, address _player, uint8 _betArea, uint256 _value) public view returns(bool res) {
+    function canChipIn(uint256 _betId, address _player, uint8 _betArea) public view returns(bool res) {
         res = _gamblingExist(_betId);
         if (res) {
             Gambling storage _gambling = gamblings[_betId];

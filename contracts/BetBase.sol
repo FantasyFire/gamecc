@@ -47,6 +47,7 @@ contract BetBase {
 
     // 结束赌局，分配赌金 考虑换个方法名close感觉不太合适
     function _closeGambling(Gambling storage _gambling) internal {
+        // todo: 这个赢区将由一个接口获取
         // 假设已获得这局赢的下注区
         uint8 winBetArea = 1;
         // @notice 因为memory只能声明静态数组，这里以所有玩家数为数组长度，保证足够位置
@@ -63,6 +64,7 @@ contract BetBase {
         for (uint8 j = 0; j < winners.length; j++) {
             address winner = winners[j];
             if (winner != 0) {
+                // todo: 这里应该检测erc20Contract是否为0
                 // @notice 由于这里用的是uint256，尾数会被截去
                 erc20Contract.transfer(winner, _gambling.totalStake * _gambling.stakes[winner].value / totalWinStake);
             }

@@ -99,7 +99,7 @@ contract GameChipToken is StandardToken, Ownable {
 
     function chipIn(uint256 betId, uint8 _betArea, uint256 _value) public {
         require(address(bet) != address(0));
-        require(bet.canChipIn(betId, msg.sender, _betArea, _value));
+        require(bet.canChipIn(betId, msg.sender, _betArea));
         transfer(address(bet), _value);
         bet.chipIn(betId, msg.sender, _betArea, _value);
     }
