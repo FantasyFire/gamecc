@@ -1,8 +1,9 @@
 pragma solidity ^0.4.21;
 
 
-import "./token/ERC20/StandardToken.sol";
-import "./ownership/Ownable.sol";
+import "./StandardToken.sol";
+import "./Ownable.sol";
+import "./Bet.sol";
 
 
 /**
@@ -19,6 +20,8 @@ contract GameChipToken is StandardToken, Ownable {
     uint8 public constant decimals = 0;
 
     uint256 public constant INITIAL_SUPPLY = 100000000000000000000 * (10 ** uint256(decimals));
+
+    Bet public bet;
 
     /**
      * @dev Constructor that gives msg.sender all of existing tokens.
@@ -86,6 +89,19 @@ contract GameChipToken is StandardToken, Ownable {
         }
 
         return true;
+    }
+
+    function setBetContractAddress(address _address) public {
+        Bet candidateContract = Bet(_address);
+        require(candidateContract.isBetContract());
+        bet = candidateContract;
+    }
+
+    function chipIn(uint256 betId, uint8 _betArea, uint256 _value) public {
+        require(address(bet) != address(0));
+        require(bet.canChipIn(betId, msg.sender, _betArea, _value));
+        transfer(address(bet), _value);
+        bet.chipIn(betId, msg.sender, _betArea, _value);
     }
 
     /**
