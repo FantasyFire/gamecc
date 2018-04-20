@@ -39,13 +39,13 @@ contract BetBase {
     /// @dev DON'T give me your money.
     function() external {}
 
-    // todo: 增加一个赌局
+    // 增加一个赌局
     function _addGambling(uint256 _betId, Gambling _gambling) internal {
         gamblings[_betId] = _gambling;
         emit GamblingCreated();
     }
 
-    // todo: 结束赌局，分配赌金 考虑换个方法名close感觉不太合适
+    // 结束赌局，分配赌金 考虑换个方法名close感觉不太合适
     function _closeGambling(Gambling storage _gambling) internal {
         // 假设已获得这局赢的下注区
         uint8 winBetArea = 1;
@@ -70,7 +70,7 @@ contract BetBase {
         emit GamblingClosed();
     }
 
-    // todo: 下注
+    // 下注
     function _chipIn(Gambling storage _gambling, address _player, uint8 _betArea, uint256 _value) internal {
         // 一个玩家在一个赌局中只能下一次注
         _gambling.players.push(_player);
@@ -79,7 +79,7 @@ contract BetBase {
         emit ChipIn();
     }
 
-    // todo: 返回赌局是否正在进行
+    // 返回赌局是否正在进行
     function _isOnBet(Gambling storage _gambling) internal view returns(bool) {
         return _gambling.startedAt <= now && now <= _gambling.startedAt + _gambling.duration;
     }
@@ -89,12 +89,12 @@ contract BetBase {
         // @notice 暂认为startedAt不为0赌局就是存在的
         return gamblings[_betId].startedAt > 0;
     }
-    // todo: 返回玩家是否已经参与该赌局
+    // 返回玩家是否已经参与该赌局
     function _hasChippedIn(Gambling storage _gambling, address _player) internal view returns(bool) {
         return _gambling.stakes[_player].betArea != 0;
     }
 
-    // todo: 返回赌局中是否存在该下注区
+    // 返回赌局中是否存在该下注区
     function _betAreaExist(Gambling storage _gambling, uint8 _betArea) internal view returns(bool res) {
         res = false;
         for (uint8 i = 0; i <= _gambling.betAreas.length; i++) {
@@ -105,7 +105,7 @@ contract BetBase {
         }
     }
 
-    // todo: 返回赌局是否可结束
+    // 返回赌局是否可结束
     function _isReadyToClose(Gambling storage _gambling) internal view returns(bool res) {
         return _gambling.startedAt + _gambling.duration <= now;
     }
