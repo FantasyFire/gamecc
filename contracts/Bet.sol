@@ -62,7 +62,7 @@ contract Bet is BetBase {
         _closeGambling(_gambling);
     }
 
-    function withdrawERC20() public onlyCEO {
+    function withdrawBalances() public onlyCEO {
         // todo: 这里应该检测erc20Contract是否为0
         erc20Contract.transfer(ceoAddress, erc20Contract.balanceOf(this));
     }
